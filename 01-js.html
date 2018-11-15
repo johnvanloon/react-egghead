@@ -1,0 +1,75 @@
+<div id="root"></div>
+<script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/prop-types@15/prop-types.js"></script>
+<script src="https://unpkg.com/babel-standalone@6/babel.js"></script>
+<style>
+.box {
+    border: 5px solid green;
+}
+
+.box--small {
+    width: 60px;
+    height: 60px;
+}
+</style>
+<script type="text/babel">
+    const rootElement = document.getElementById('root')
+    // const element = document.createElement('div')
+    // element.textContent = 'Hello World'
+    // element.className = 'container'
+    // rootElement.appendChild(element)
+    // const element = React.createElement('div', {className: 'container'}, 'Hello from React')
+    const Message = (props) => 
+        <div>
+            { props.msg1
+            ? props.msg1
+            : "No msg"}
+        </div>
+        // <div>{props.msg1} _bla_ {props.msg2}</div>
+    const props = {
+        className: 'box box--small',
+        style: {paddingLeft: '200px'}
+    }
+
+    Message.propTypes = {
+        msg1: PropTypes.string,
+        msg2: PropTypes.string
+    }
+    
+    const state = {eventCount: 1}
+
+    const st = props.style
+    const element = 
+        <div {...props} style={{paddingTop: '100px',...st}} >
+            <Message msg1="een"></Message>
+            <p>
+                <button onClick={increment}>click</button>
+            </p>
+            <div>count: {state.eventCount}</div>
+        </div>
+    
+    function tick(name) {
+        const time = new Date().toLocaleTimeString()
+        const elmt = <div>Hi {name} - It is {time}</div>
+        ReactDOM.render(elmt, rootElement)
+    }
+    console.log(element)
+    var t1  = () => tick("john")
+    // setInterval(t1, 1000)
+
+
+    function setState(newState) {
+        Object.assign(state, newState)
+        renderApp()
+    }
+    function increment() {
+        setState({eventCount: state.eventCount+2})
+    }
+
+    function renderApp() {
+        ReactDOM.render(element, rootElement)
+        console.log(state)
+    }
+    renderApp()
+</script>
